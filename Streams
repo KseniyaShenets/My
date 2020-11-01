@@ -1,0 +1,53 @@
+package icecream;
+import java.io.*;
+    public class Icecream {
+        String name;
+        double percentage;
+        String chocolate;
+
+        Icecream() throws IOException {
+            //открываем символьный поток ввода
+            BufferedReader input = new BufferedReader(new InputStreamReader(System.in, "Cp1251"));
+            System.out.print("\nEnter the name: ");
+            this.name = input.readLine();
+            System.out.print("\nEnter the fat percentage: ");
+            this.percentage = Double.parseDouble(input.readLine());
+            System.out.print("\nAvailability of chocolate(present/not present): ");
+            this.chocolate = input.readLine();}
+            //записываем информацию в файл document.doc
+            public void InputInFile ()throws IOException {
+
+                File file = new File("D://document.docx");
+                file.deleteOnExit(); //файл удалится после завершения работы виртуальной машины Java
+                //поток для записи в файл
+                FileWriter writer;
+                writer = new FileWriter(file);
+                System.out.print("\nName of the icecream is " + this.name + "; Fat percentage is " + this.percentage + "; Chocolate is " + this.chocolate + ";");
+                writer.flush();
+                writer.close();
+            }
+            //статический метод вывода информации из файла
+            public static void OutputOfFile() throws IOException {
+                File file = new File("D://document.docx");
+                //поток для вывода информации
+                FileReader reader;
+                char buffer[];
+                int numb;
+                buffer = new char[3];
+                reader = new FileReader(file);
+                do {
+                    numb = reader.read(buffer);
+                    System.out.print(buffer[0]);
+                } while (numb == 1);
+                reader.close();
+            }
+            public static void main (String[]args) throws IOException {
+                Icecream[] icecream;
+                icecream = new Icecream [3];
+                for (int i = 0; i < 3; i++)
+                    icecream[i] = new Icecream();
+                for (int i = 0; i < 3; i++)
+                    icecream[i].InputInFile();
+                OutputOfFile();
+            }
+        }
